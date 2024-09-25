@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 1 : integer
+begin
+    x < 8
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1

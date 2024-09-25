@@ -1,0 +1,11 @@
+-- src.lx --
+declare
+    x is 1 : integer;
+    y is x+2 : integer
+begin
+    x
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1

@@ -1,0 +1,11 @@
+-- src.lx --
+declare
+    x : boolean
+begin
+  case 1 of
+    1: true//
+  else 3 end
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

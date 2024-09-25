@@ -1,0 +1,13 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    2000000000+2000000000
+end
+(*
+Output: ???
+*)
+-- compiler.exitstatus --
+0
+-- program.stdout --
+Exception(.|\n)*

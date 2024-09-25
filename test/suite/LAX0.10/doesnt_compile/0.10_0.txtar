@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer;
+    x is 0 : integer
+begin
+    x
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

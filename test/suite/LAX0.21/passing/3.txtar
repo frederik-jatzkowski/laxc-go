@@ -1,0 +1,17 @@
+-- src.lx --
+declare
+    x:integer
+begin
+    if true
+        then
+            if true
+                then 1
+                else 2
+            end
+        else 3
+    end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1

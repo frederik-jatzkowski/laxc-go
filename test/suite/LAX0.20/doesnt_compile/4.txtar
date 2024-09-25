@@ -1,0 +1,13 @@
+-- src.lx --
+declare
+    x is 1 : real
+begin
+    x = declare
+            y is true : boolean
+        begin
+            y
+        end
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

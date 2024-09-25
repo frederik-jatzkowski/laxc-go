@@ -1,0 +1,9 @@
+-- src.lx --
+declare
+    false is 123 : integer
+begin
+    false
+end
+-- compiler.exitstatus --
+1
+-- program.stdout --

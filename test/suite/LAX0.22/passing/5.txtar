@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x:boolean
+begin
+    1 = 1 and true
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1

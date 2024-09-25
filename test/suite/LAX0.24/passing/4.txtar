@@ -1,0 +1,14 @@
+-- src.lx --
+declare
+    x : integer
+begin
+  x := 6;
+  case x of
+    1: 1.0//
+    2: 2.0
+  else 3.0 end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+3\.0+

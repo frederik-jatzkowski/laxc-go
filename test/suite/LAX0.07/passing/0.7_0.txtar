@@ -1,0 +1,10 @@
+-- src.lx --
+declare (* [pass: 2] $fail:1-8$ *)
+  x is 0:integer
+begin
+  -2
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+-2

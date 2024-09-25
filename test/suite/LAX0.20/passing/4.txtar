@@ -1,0 +1,14 @@
+-- src.lx --
+declare
+    x is 1 : real
+begin
+    x + declare
+            y is 1 : real
+        begin
+            y
+        end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+2\.0+

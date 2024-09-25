@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    -77
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+-77

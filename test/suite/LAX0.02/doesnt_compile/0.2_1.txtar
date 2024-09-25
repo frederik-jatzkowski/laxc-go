@@ -1,0 +1,9 @@
+-- src.lx --
+declare (* [fail] Test zweite Alternative Produktion A4.0.9 *)
+  x is 0:integer
+begin
+  1 2
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

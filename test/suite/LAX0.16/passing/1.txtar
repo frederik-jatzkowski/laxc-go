@@ -1,0 +1,13 @@
+-- src.lx --
+declare
+    a : integer;
+    b : integer;
+    c : integer
+begin
+    a := (b := (c := 1));
+    (a+b+c) * 3
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+9

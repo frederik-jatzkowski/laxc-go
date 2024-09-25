@@ -1,0 +1,19 @@
+-- src.lx --
+declare (* [pass: 0] *)
+  u:integer;
+  v:integer;
+  w:real;
+  x is 1.1754943508223e-38:real;
+  y:real;
+  z:real
+begin
+  w;
+  x;
+  y;
+  z:=1.0;
+  -1000.75>(x/+-z)
+end (* lhs:-1.1754943508223*10^-38 *)
+-- compiler.exitstatus --
+0
+-- program.stdout --
+0

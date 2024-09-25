@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    1+30000+5
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+30006

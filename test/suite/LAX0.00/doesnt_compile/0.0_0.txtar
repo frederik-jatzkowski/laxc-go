@@ -1,0 +1,9 @@
+-- src.lx --
+declare (* [fail] integer too large *)
+    x is 0 : integer
+begin
+    184467440737095516161
+end
+-- compiler.exitstatus --
+1,-1,-1
+-- program.stdout --

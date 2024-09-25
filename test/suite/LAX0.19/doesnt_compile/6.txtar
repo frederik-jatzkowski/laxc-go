@@ -1,0 +1,9 @@
+-- src.lx --
+declare
+    x : boolean
+begin
+    if true then 1.0 else false end
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

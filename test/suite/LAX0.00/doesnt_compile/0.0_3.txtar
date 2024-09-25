@@ -1,0 +1,9 @@
+-- src.lx --
+declare (* [fail]  test production A.3.0.7, missing value, ':' and type in declaration *)
+  x is 
+begin
+  1
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

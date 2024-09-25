@@ -1,0 +1,8 @@
+-- src.lx --
+declare
+begin
+    true < false
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

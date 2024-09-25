@@ -1,0 +1,12 @@
+-- src.lx --
+declare
+    x is 2 : real;
+    y : real
+begin
+    y := 42;
+    x<x
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+0

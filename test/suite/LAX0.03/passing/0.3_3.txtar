@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    5 * 40000000
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+200000000

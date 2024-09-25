@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    -(-2147483647 -1)
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+Exception(.|\n)*

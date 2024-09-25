@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    2000000000 div 10000 div 55
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+3636

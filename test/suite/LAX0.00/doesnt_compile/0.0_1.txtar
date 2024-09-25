@@ -1,0 +1,7 @@
+-- src.lx --
+declare (* [fail] test production A.2.0.3, missing declaration and 'begin' *)
+  1
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x : boolean;
+    y : integer
+begin
+    (x := true) = (y := 1)
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

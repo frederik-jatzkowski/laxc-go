@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    2 mod 2000000000
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+2

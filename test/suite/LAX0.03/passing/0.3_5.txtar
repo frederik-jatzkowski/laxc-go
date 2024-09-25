@@ -1,0 +1,10 @@
+-- src.lx --
+declare 
+  x is 0:integer
+begin
+  0-3*536870912
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+-1610612736

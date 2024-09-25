@@ -1,0 +1,11 @@
+-- src.lx --
+declare
+    x is 8 : real;
+    y is 2 : integer
+begin
+    x / y
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+4\.0+

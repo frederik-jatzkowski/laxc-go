@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x : real
+begin
+    x := if 1.0 = 2 then 1.0 else 2 end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+2\.0+

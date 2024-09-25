@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x : integer
+begin
+    3 * (x := 2)
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+6

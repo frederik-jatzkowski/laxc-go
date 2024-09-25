@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 1337 : integer
+begin
+    x
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1337

@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x : integer
+begin
+    0 / 0
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+-?nan

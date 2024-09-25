@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    100 * 100 div 100 * 100 div 100 + 42 - 100
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+42

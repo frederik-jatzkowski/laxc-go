@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x : integer
+begin
+    (x := (x := (x := 3)))
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+3

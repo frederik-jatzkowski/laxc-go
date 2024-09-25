@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 2 : integer
+begin
+    x+x
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+4

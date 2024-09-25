@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 1.0 : real
+begin
+    x
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1\.00000000

@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is 0 : integer
+begin
+    3 div 5
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+0

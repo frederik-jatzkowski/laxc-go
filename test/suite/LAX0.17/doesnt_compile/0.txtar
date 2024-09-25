@@ -1,0 +1,9 @@
+-- src.lx --
+declare
+    x is false : real
+begin
+    x
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

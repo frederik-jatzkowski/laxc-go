@@ -1,0 +1,25 @@
+-- src.lx --
+declare
+    y is declare
+            z is 1 : integer
+        begin
+            x := z;
+            declare
+                b : integer;
+                x : integer
+            begin
+                x := 1000;
+                b := 2;
+                a := b;
+                3
+            end
+        end : integer;
+    x : integer;
+    a : integer
+begin
+    a + x + y
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+6

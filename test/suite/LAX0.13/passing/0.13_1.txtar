@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x is false : boolean
+begin
+    2 div 2 = 3 div 3
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+1

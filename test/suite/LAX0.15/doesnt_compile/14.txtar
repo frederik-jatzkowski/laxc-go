@@ -1,0 +1,9 @@
+-- src.lx --
+declare
+    x : boolean
+begin
+    3 mod (x := true)
+end
+-- compiler.exitstatus --
+1,-1
+-- program.stdout --

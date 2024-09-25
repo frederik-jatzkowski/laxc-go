@@ -1,0 +1,23 @@
+-- src.lx --
+declare (* [pass: 13.0] *)
+  t:integer;
+  u:integer;
+  v is 74:integer;
+  w is 2:integer;
+  x:real;
+  y:integer;
+  z is 1.7:real
+begin
+  u:=13;
+  t:=12;
+  x:=4.9;
+  y:=83;
+  case w of   (* pri=real *)
+    2: case t of 12: u//15: declare q:boolean begin v end else x end//
+    5: y
+  else z end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+13\.0+

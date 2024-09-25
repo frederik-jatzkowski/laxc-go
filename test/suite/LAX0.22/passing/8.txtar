@@ -1,0 +1,10 @@
+-- src.lx --
+declare
+    x:boolean
+begin
+    1 = 2000000000 * 2 and true
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+Exception(.|\n)*
