@@ -6,6 +6,7 @@ import (
 	"laxc/internal/graph"
 	"laxc/internal/shared"
 	"laxc/pkg/target/mips32"
+	"slices"
 )
 
 type Function struct {
@@ -107,6 +108,36 @@ func (function *Function) substituteInstructions() {
 			}
 		}
 	}
+}
+
+func (function *Function) sortBasicBlocksTopologically() {
+	cfg := graph.NewDiGraph[int]()
+	for _, block := range function.blocks {
+		for _, instruction := range block.instructions {
+			switch typed := instruction.(type) {
+			case *jump:
+				cfg.AddEdge(block.id, typed.Target.id)
+			case *branchIf:
+				cfg.AddEdge(block.id, typed.target.id)
+			case *branchIfNot:
+				cfg.AddEdge(block.id, typed.target.id)
+			}
+		}
+	}
+
+	order, err := cfg.TopologicalSort()
+	if err != nil {
+		return
+	}
+
+	orderMap := make(map[int]int, len(order))
+	for i, id := range order {
+		orderMap[id] = i
+	}
+
+	slices.SortFunc(function.blocks, func(a, b *BasicBlock) int {
+		return orderMap[a.id] - orderMap[b.id]
+	})
 }
 
 func (function *Function) removeUnusedInstructions() {

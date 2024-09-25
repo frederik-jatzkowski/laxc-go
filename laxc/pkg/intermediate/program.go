@@ -64,6 +64,10 @@ func (prog Program) String() string {
 }
 
 func (prog Program) LascotFriendlyString() string {
+	for _, function := range prog.functions {
+		function.sortBasicBlocksTopologically()
+	}
+
 	buf := bytes.NewBufferString("")
 	writer := tabwriter.NewWriter(buf, 0, 2, 2, ' ', 0)
 
