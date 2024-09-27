@@ -111,23 +111,32 @@ func (function *Function) substituteInstructions() {
 }
 
 func (function *Function) sortBasicBlocksTopologically() {
+	symRegDefs := make(map[shared.SymReg]*BasicBlock)
+	for _, block := range function.blocks {
+		for _, instruction := range block.instructions {
+			write, ok := instruction.(WriteInstruction)
+			if ok {
+				symRegDefs[write.Result()] = block
+			}
+		}
+	}
+
 	cfg := graph.NewDiGraph[int]()
 	for _, block := range function.blocks {
 		for _, instruction := range block.instructions {
-			switch typed := instruction.(type) {
-			case *jump:
-				cfg.AddEdge(block.id, typed.Target.id)
-			case *branchIf:
-				cfg.AddEdge(block.id, typed.target.id)
-			case *branchIfNot:
-				cfg.AddEdge(block.id, typed.target.id)
+			usedSymRegs := instruction.UsedSymRegs()
+			for _, symReg := range usedSymRegs {
+				defBlock := symRegDefs[symReg]
+				if defBlock.id != block.id {
+					cfg.AddEdge(defBlock.id, block.id)
+				}
 			}
 		}
 	}
 
 	order, err := cfg.TopologicalSort()
 	if err != nil {
-		return
+		panic(err)
 	}
 
 	orderMap := make(map[int]int, len(order))
