@@ -131,6 +131,15 @@ func (function *Function) sortBasicBlocksTopologically() {
 					cfg.AddEdge(defBlock.id, block.id)
 				}
 			}
+
+			switch branch := instruction.(type) {
+			case *jump:
+				cfg.AddEdge(block.id, branch.Target.id)
+			case *branchIf:
+				cfg.AddEdge(block.id, branch.target.id)
+			case *branchIfNot:
+				cfg.AddEdge(block.id, branch.target.id)
+			}
 		}
 	}
 
