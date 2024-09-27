@@ -28,7 +28,7 @@ func (node CaseClause) IntermediateExpression(
 	exitBlock := ilFunc.AddBasicBlock("case exit")
 
 	conditionSymReg := ilFunc.NextSymReg()
-	node.Condition.IntermediateExpression(ilProg, ilFunc, ilBlock, conditionSymReg)
+	ilBlock = node.Condition.IntermediateExpression(ilProg, ilFunc, ilBlock, conditionSymReg)
 
 	nextTestBlock := ilBlock
 	lastResultSymReg := shared.SymReg(-1)

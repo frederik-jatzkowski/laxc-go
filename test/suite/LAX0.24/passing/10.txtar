@@ -1,0 +1,39 @@
+-- src.lx --
+declare (* [pass: 49.0] *)
+  t:integer;
+  u:integer;
+  v is 3:integer;
+  w is 2:integer;
+  x is 49:integer;
+  y is 83:integer;
+  z:real
+begin
+  u:=5;
+  t:=13;
+  z:=1.7;
+  case
+    case t of
+      12:
+        declare
+          q:boolean
+        begin
+          u
+        end//
+      15:
+        v
+      else
+        w
+      end
+    of   (* pri=real *)
+  2:
+    x//
+  5:
+    y
+  else
+    z
+  end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+49\.0+

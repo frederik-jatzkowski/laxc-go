@@ -108,7 +108,7 @@ func (expr CaseClause) AttributedExpression(scope env.Table) (attributed.Express
 	result.ResultType = prev.Type()
 	for _, possibleResult := range possibleResults {
 		result.ResultType = env.GreatestCommonDenominator(
-			prev.Type(),
+			result.ResultType,
 			possibleResult.Type(),
 		)
 
