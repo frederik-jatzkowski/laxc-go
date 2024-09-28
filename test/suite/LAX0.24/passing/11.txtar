@@ -1,0 +1,35 @@
+-- src.lx --
+declare
+  t:integer;
+  u:integer;
+  v is 3:integer;
+  w is 2:integer;
+  x is 49:integer;
+  y is 83:integer;
+  z:real
+begin
+  u:=5;
+  t:=13;
+  z:=1.7;
+  if 
+    if
+      declare
+        q:boolean
+      begin
+        2 = 3
+      end
+    then
+      true
+    else
+      false
+    end
+  then
+    x
+  else
+    49.0
+  end
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+49\.0+

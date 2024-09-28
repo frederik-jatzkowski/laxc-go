@@ -20,7 +20,7 @@ func (node OneSidedConditionalClause) IntermediateExpression(
 	ilBlock.Comment("if")
 
 	conditionSymReg := ilFunc.NextSymReg()
-	node.Condition.IntermediateExpression(ilProg, ilFunc, ilBlock, conditionSymReg)
+	ilBlock = node.Condition.IntermediateExpression(ilProg, ilFunc, ilBlock, conditionSymReg)
 
 	thenBlock := ilFunc.AddBasicBlock("then")
 	exitBlock := ilFunc.AddBasicBlock("end")
