@@ -52,3 +52,20 @@ func (expr Widen) IntermediateExpression(
 func (expr Widen) Type() env.Type {
 	return env.RealType{}
 }
+
+type Voiden struct {
+	Arg Expression
+}
+
+func (expr Voiden) IntermediateExpression(
+	ilProg *intermediate.Program,
+	ilFunc *intermediate.Function,
+	ilBlock *intermediate.BasicBlock,
+	result shared.SymReg,
+) *intermediate.BasicBlock {
+	return expr.Arg.IntermediateExpression(ilProg, ilFunc, ilBlock, result)
+}
+
+func (expr Voiden) Type() env.Type {
+	return env.VoidType{}
+}

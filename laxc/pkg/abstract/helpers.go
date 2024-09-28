@@ -44,7 +44,12 @@ func coerceBothToOneOf(arg1, arg2 attributed.Expression, permitted ...env.Type) 
 	}
 
 	if shortest == math.MaxInt {
-		return arg1, arg2, fmt.Errorf("there are no coercion sequences such that %s and %s can be coerced to the same permitted type", arg1.Type(), arg2.Type())
+		return arg1, arg2, fmt.Errorf(
+			"there are no coercion sequences such that %s and %s can be coerced to the same permitted type %v",
+			arg1.Type(),
+			arg2.Type(),
+			permitted,
+		)
 	}
 
 	return arg1Out, arg2Out, nil
@@ -63,6 +68,13 @@ func coerceToOneOf(arg attributed.Expression, permitted ...env.Type) (argOut att
 
 		if argOut.Type().Equals(env.IntegerType{}) {
 			argOut = attributed.Widen{Arg: argOut}
+			length++
+
+			continue
+		}
+
+		if !argOut.Type().Equals(env.VoidType{}) {
+			argOut = attributed.Voiden{Arg: argOut}
 			length++
 
 			continue

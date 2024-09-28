@@ -1,0 +1,20 @@
+-- src.lx --
+declare (* [pass: 33] *)
+  u is 3:integer;
+  v is 5:integer;
+  i is 1:integer;
+  j is 2:integer;
+  x:boolean;
+  y is 7:integer;
+  z is 8:integer;
+  a:integer
+begin
+  a:=30;
+  x:=false;
+  if u>v then if i<j then if x then a:=31 end else a:=32; y end else a:=33; z end;
+  a
+end
+-- compiler.exitstatus --
+0
+-- program.stdout --
+33

@@ -81,7 +81,7 @@ func (node TwoSidedConditionalClause) IntermediateExpression(
 	elseResult := ilFunc.NextSymReg()
 
 	for i, stat := range node.Else {
-		if i != len(node.Then)-1 {
+		if i != len(node.Else)-1 {
 			elseBlock = stat.IntermediateExpression(ilProg, ilFunc, elseBlock, ilFunc.NextSymReg())
 		} else {
 			elseBlock = stat.IntermediateExpression(ilProg, ilFunc, elseBlock, elseResult)
