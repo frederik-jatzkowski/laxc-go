@@ -25,7 +25,7 @@ func (block *BasicBlock) Phi(result, arg1, arg2 shared.SymReg) {
 }
 
 func (instr phi) LascotFriendlyString(line int, mapping map[shared.SymReg]shared.SymReg) string {
-	return fmt.Sprintf("\tt[%d]:\t%s\tt[%d]\tt[%d]\n", line, "Phi", instr.arg1, instr.arg2)
+	return fmt.Sprintf("\tt[%d]:\t%s\tt[%d]\tt[%d]\n", line, "Phi", mapping[instr.arg1], mapping[instr.arg2])
 }
 
 func (instr phi) WriteTo(writer io.Writer) (int64, error) {
