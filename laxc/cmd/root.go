@@ -7,6 +7,7 @@ import (
 	"laxc/pkg/lex"
 	"os"
 	"regexp"
+	"slices"
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
@@ -18,6 +19,8 @@ var dumpConfig = spew.ConfigState{
 	DisablePointerAddresses: true,
 	DisableCapacities:       true,
 }
+
+var stages = []string{"lexer", "concrete", "abstract", "attributed", "intermediate", "target"}
 
 func dump(something any) {
 
@@ -98,11 +101,8 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		switch stage {
-		case "lexer", "concrete", "abstract", "attributed", "intermediate", "target", "":
-			break
-		default:
-			cobra.CheckErr(fmt.Errorf("unknown compiler stage: %s", stage))
+		if !slices.Contains(stages, stage) && stage != "" {
+			cobra.CheckErr(fmt.Errorf("unknown compiler stage %s, permitted are %v", stage, stages))
 		}
 
 		inputFileName := args[0]
@@ -212,7 +212,6 @@ var rootCmd = &cobra.Command{
 		}
 
 		if stage == "intermediate" {
-			intermediateProg.Main().ResolvePhiFunctions()
 			fmt.Println(intermediateProg)
 
 			return nil
@@ -265,7 +264,7 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().StringP("stage", "s", "", "if set, the compiler will stop with the specified stage and print the result to stdout. "+
-		"Possible values are (lexer|concrete|abstract|attributed|intermediate|target)")
+		"Possible values are "+fmt.Sprint(stages))
 
 	rootCmd.Flags().Bool("timing", false, "outputs timing information about the different compilation steps")
 
