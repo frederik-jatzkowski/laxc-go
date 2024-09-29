@@ -2,7 +2,6 @@ package intermediate
 
 import (
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -14,9 +13,6 @@ func (block *BasicBlock) IntAdd(result, arg1, arg2 shared.SymReg) {
 		arg2:   arg2,
 		mips32: func(instr binOp, arg1, arg2, result shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.ADD(result, arg1, arg2, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_ADD(result, arg1, arg2)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -40,9 +36,6 @@ func (block *BasicBlock) IntSub(result, arg1, arg2 shared.SymReg) {
 		arg2:   arg2,
 		mips32: func(instr binOp, arg1, arg2, result shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.SUB(result, arg1, arg2, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_SUB(result, arg1, arg2)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -85,9 +78,6 @@ func (block *BasicBlock) IntMul(result, arg1, arg2 shared.SymReg) {
 			// write result to result register
 			mips32Prog.MFLO(result, "")
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_MUL(result, arg1, arg2)
-		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
 				lit1, ok1 := arg1.(*literal)
@@ -117,9 +107,6 @@ func (block *BasicBlock) IntDiv(result, arg1, arg2 shared.SymReg) {
 
 			// write result from $LO to result register
 			mips32Prog.MFLO(result, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_DIV(result, arg1, arg2)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -151,9 +138,6 @@ func (block *BasicBlock) IntMod(result, arg1, arg2 shared.SymReg) {
 			// write result from $HI to result register
 			mips32Prog.MFHI(result, "")
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_MOD(result, arg1, arg2)
-		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
 				lit1, ok1 := arg1.(*literal)
@@ -175,9 +159,6 @@ func (block *BasicBlock) IntNeg(result, arg shared.SymReg) {
 		arg:    arg,
 		mips32: func(instr unOp, arg, result shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.SUB(result, mips32.RegZero, arg, "")
-		},
-		bytecode: func(instr unOp, arg, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_NEG(result, arg)
 		},
 		optimize: func(instr unOp, arg Instruction) (Instruction, bool) {
 			{

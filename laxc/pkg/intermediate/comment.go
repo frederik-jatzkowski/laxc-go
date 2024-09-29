@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -37,9 +36,6 @@ func (instr comment) WriteTo(writer io.Writer) (int64, error) {
 }
 
 func (instr comment) Mips32(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, mips32Prog *mips32.Program) {
-}
-
-func (instr comment) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, prog *bytecode.Program) {
 }
 
 func (instr comment) Optimize(_ map[shared.SymReg]Instruction) (Instruction, bool) {

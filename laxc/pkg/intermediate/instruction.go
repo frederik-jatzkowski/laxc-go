@@ -3,7 +3,6 @@ package intermediate
 import (
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -14,11 +13,6 @@ type Instruction interface {
 		symRegAllocs map[shared.SymReg]Allocation,
 		localSymVarAllocs map[shared.LocalSymVar]int32,
 		mips32Prog *mips32.Program,
-	)
-	Bytecode(
-		symRegAllocs map[shared.SymReg]Allocation,
-		localSymVarAllocs map[shared.LocalSymVar]int32,
-		bytecodeProg *bytecode.Program,
 	)
 	Optimize(dependencies map[shared.SymReg]Instruction) (optimized Instruction, propagate bool)
 	UsedSymRegs() []shared.SymReg

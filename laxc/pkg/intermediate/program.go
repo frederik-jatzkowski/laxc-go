@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 	"text/tabwriter"
 )
@@ -134,16 +133,6 @@ func (prog *Program) Mips32Program() mips32.Program {
 	}
 
 	return *mips32Prog
-}
-
-func (prog *Program) BytecodeProgram() bytecode.Program {
-	result := bytecode.NewEmptyProgram()
-
-	for _, instr := range prog.instructions {
-		instr.Bytecode(prog.symRegAllocs, prog.localSymVarAllocs, &result)
-	}
-
-	return result
 }
 
 func (prog *Program) Optimize() {

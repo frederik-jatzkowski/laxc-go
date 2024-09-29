@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -16,7 +15,6 @@ type binOp struct {
 	arg1     shared.SymReg
 	arg2     shared.SymReg
 	mips32   func(instr binOp, arg1, arg2, result shared.Reg, mips32Prog *mips32.Program)
-	bytecode func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program)
 	optimize func(instr binOp, arg1, arg2 Instruction) (Instruction, bool)
 }
 
@@ -56,16 +54,6 @@ func (instr binOp) Mips32(allocations map[shared.SymReg]Allocation, localSymVarA
 	if alloc := allocations[instr.result]; alloc.IsSpilled {
 		mips32Prog.SW(result, mips32.RegSp, int16(alloc.MemLoc), "")
 	}
-}
-
-func (instr binOp) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	instr.bytecode(
-		instr,
-		allocations[instr.arg1].Reg,
-		allocations[instr.arg2].Reg,
-		allocations[instr.result].Reg,
-		bytecodeProg,
-	)
 }
 
 func (instr binOp) Optimize(dependencies map[shared.SymReg]Instruction) (Instruction, bool) {

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -15,7 +14,6 @@ type unOp struct {
 	result   shared.SymReg
 	arg      shared.SymReg
 	mips32   func(instr unOp, arg, result shared.Reg, mips32Prog *mips32.Program)
-	bytecode func(instr unOp, arg, result shared.Reg, bytecodeProg *bytecode.Program)
 	optimize func(instr unOp, arg Instruction) (Instruction, bool)
 }
 
@@ -49,10 +47,6 @@ func (instr unOp) Mips32(allocations map[shared.SymReg]Allocation, localSymVarAl
 	if alloc := allocations[instr.result]; alloc.IsSpilled {
 		mips32Prog.SW(result, mips32.RegSp, int16(alloc.MemLoc), "")
 	}
-}
-
-func (instr unOp) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	instr.bytecode(instr, allocations[instr.arg].Reg, allocations[instr.result].Reg, bytecodeProg)
 }
 
 func (instr unOp) Optimize(dependencies map[shared.SymReg]Instruction) (Instruction, bool) {

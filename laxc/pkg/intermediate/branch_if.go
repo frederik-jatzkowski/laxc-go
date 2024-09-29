@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
 type branchIf struct {
-	arg      shared.SymReg
-	target   *BasicBlock
-	mips32   func(instr branchIf, condition shared.Reg, mips32Prog *mips32.Program)
-	bytecode func(instr branchIf, condition shared.Reg, bytecodeProg *bytecode.Program)
+	arg    shared.SymReg
+	target *BasicBlock
+	mips32 func(instr branchIf, condition shared.Reg, mips32Prog *mips32.Program)
 }
 
 func (block *BasicBlock) BranchIf(condition shared.SymReg, target *BasicBlock) {
@@ -21,9 +19,6 @@ func (block *BasicBlock) BranchIf(condition shared.SymReg, target *BasicBlock) {
 		target: target,
 		mips32: func(instr branchIf, condition shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.BNE(condition, mips32.RegZero, instr.target.Label(), "")
-		},
-		bytecode: func(instr branchIf, condition shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.JUMP_IF_NOT(condition, instr.target.Label())
 		},
 	})
 }
@@ -48,10 +43,6 @@ func (instr branchIf) Mips32(allocations map[shared.SymReg]Allocation, localSymV
 	}
 
 	instr.mips32(instr, condition, mips32Prog)
-}
-
-func (instr branchIf) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	instr.bytecode(instr, allocations[instr.arg].Reg, bytecodeProg)
 }
 
 func (instr branchIf) Optimize(_ map[shared.SymReg]Instruction) (Instruction, bool) {

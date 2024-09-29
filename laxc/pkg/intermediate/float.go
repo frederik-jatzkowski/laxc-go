@@ -2,7 +2,6 @@ package intermediate
 
 import (
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -15,9 +14,6 @@ func (block *BasicBlock) IntToFloat(result, arg shared.SymReg) {
 			mips32Prog.MTC1(arg, mips32.RegF0, "")
 			mips32Prog.CVTSW(mips32.RegF0, mips32.RegF0, "")
 			mips32Prog.MFC1(result, mips32.RegF0, "")
-		},
-		bytecode: func(instr unOp, arg, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_TO_FLOAT(arg, result)
 		},
 	})
 }
@@ -36,9 +32,6 @@ func (block *BasicBlock) FloatAdd(result, arg1, arg2 shared.SymReg) {
 
 			mips32Prog.MFC1(result, mips32.RegF0, "")
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_ADD(result, arg1, arg2)
-		},
 	})
 }
 
@@ -55,9 +48,6 @@ func (block *BasicBlock) FloatSub(result, arg1, arg2 shared.SymReg) {
 			mips32Prog.SUBS(mips32.RegF0, mips32.RegF0, mips32.RegF1, "")
 
 			mips32Prog.MFC1(result, mips32.RegF0, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_SUB(result, arg1, arg2)
 		},
 	})
 }
@@ -76,9 +66,6 @@ func (block *BasicBlock) FloatMul(result, arg1, arg2 shared.SymReg) {
 
 			mips32Prog.MFC1(result, mips32.RegF0, "")
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_MUL(result, arg1, arg2)
-		},
 	})
 }
 
@@ -96,9 +83,6 @@ func (block *BasicBlock) FloatDiv(result, arg1, arg2 shared.SymReg) {
 
 			mips32Prog.MFC1(result, mips32.RegF0, "")
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_DIV(result, arg1, arg2)
-		},
 	})
 }
 
@@ -113,9 +97,6 @@ func (block *BasicBlock) FloatNeg(result, arg shared.SymReg) {
 			mips32Prog.NEGS(mips32.RegF0, mips32.RegF0, "")
 
 			mips32Prog.MFC1(result, mips32.RegF0, "")
-		},
-		bytecode: func(instr unOp, arg, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_NEG(result, arg)
 		},
 	})
 }

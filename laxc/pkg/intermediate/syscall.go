@@ -4,17 +4,15 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
 var _ OneArgInstruction = &syscall{}
 
 type syscall struct {
-	name     string
-	arg      shared.SymReg
-	mips32   func(instr syscall, arg shared.Reg, mips32Prog *mips32.Program)
-	bytecode func(instr syscall, arg shared.Reg, bytecodeProg *bytecode.Program)
+	name   string
+	arg    shared.SymReg
+	mips32 func(instr syscall, arg shared.Reg, mips32Prog *mips32.Program)
 }
 
 func (block *BasicBlock) PrintInt(arg shared.SymReg) {
@@ -25,9 +23,6 @@ func (block *BasicBlock) PrintInt(arg shared.SymReg) {
 			mips32Prog.OR(mips32.RegA0, mips32.RegZero, arg, "")
 			mips32Prog.ORI(mips32.RegV0, mips32.RegZero, 1, "")
 			mips32Prog.SYSCALL("")
-		},
-		bytecode: func(instr syscall, arg shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_PRINT(arg)
 		},
 	})
 }
@@ -40,9 +35,6 @@ func (block *BasicBlock) PrintFloat(arg shared.SymReg) {
 			mips32Prog.MTC1(arg, mips32.RegF12, "")
 			mips32Prog.ORI(mips32.RegV0, mips32.RegZero, 2, "")
 			mips32Prog.SYSCALL("")
-		},
-		bytecode: func(instr syscall, arg shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_PRINT(arg)
 		},
 	})
 }
@@ -79,10 +71,6 @@ func (instr syscall) Mips32(allocations map[shared.SymReg]Allocation, localSymVa
 	}
 
 	instr.mips32(instr, arg, mips32Prog)
-}
-
-func (instr syscall) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	instr.bytecode(instr, allocations[instr.arg].Reg, bytecodeProg)
 }
 
 func (instr syscall) Optimize(_ map[shared.SymReg]Instruction) (Instruction, bool) {

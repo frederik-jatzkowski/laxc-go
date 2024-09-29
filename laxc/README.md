@@ -1,3 +1,12 @@
+# laxc-go
+
+Make sure, that `go 1.22.0` or newer is properly installed on your system.
+
+You can build the executable compiler using:
+
+```
+go build -o laxc.exe main.go
+```
 
 Compile for test runner:
 

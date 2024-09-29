@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -38,10 +37,6 @@ func (instr jump) WriteTo(writer io.Writer) (int64, error) {
 
 func (instr jump) Mips32(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, mips32Prog *mips32.Program) {
 	instr.Mips32Func(instr, mips32Prog)
-}
-
-func (instr jump) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	bytecodeProg.JUMP(instr.Target.Label())
 }
 
 func (instr jump) Optimize(_ map[shared.SymReg]Instruction) (Instruction, bool) {

@@ -3,7 +3,6 @@ package intermediate
 import (
 	"fmt"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -15,9 +14,6 @@ func (block *BasicBlock) IntLessThan(result, arg1, arg2 shared.SymReg) {
 		arg2:   arg2,
 		mips32: func(instr binOp, arg1, arg2, result shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.SLT(result, arg1, arg2, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_LT(result, arg1, arg2)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -46,9 +42,6 @@ func (block *BasicBlock) IntGreaterThan(result, arg1, arg2 shared.SymReg) {
 		arg2:   arg2,
 		mips32: func(instr binOp, arg1, arg2, result shared.Reg, mips32Prog *mips32.Program) {
 			mips32Prog.SLT(result, arg2, arg1, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_LT(result, arg2, arg1)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -84,9 +77,6 @@ func (block *BasicBlock) IntEquals(result, arg1, arg2 shared.SymReg) {
 
 			mips32Prog.NOR(work1, work1, work2, "")
 			mips32Prog.ANDI(result, work1, 1, "")
-		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.INT_EQ(result, arg1, arg2)
 		},
 		optimize: func(instr binOp, arg1, arg2 Instruction) (Instruction, bool) {
 			{
@@ -125,9 +115,6 @@ func (block *BasicBlock) FloatLessThan(result, arg1, arg2 shared.SymReg) {
 			mips32Prog.ORI(result, mips32.RegZero, 0, "")   // if comparison was false, set result to false
 			mips32Prog.LABEL(label, "")                     // label for jump
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_LT(result, arg1, arg2)
-		},
 	})
 }
 
@@ -149,9 +136,6 @@ func (block *BasicBlock) FloatEquals(result, arg1, arg2 shared.SymReg) {
 			mips32Prog.ORI(result, mips32.RegZero, 0, "")   // if comparison was false, set result to false
 			mips32Prog.LABEL(label, "")                     // label for jump
 		},
-		bytecode: func(instr binOp, arg1, arg2, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.FLT_EQ(result, arg1, arg2)
-		},
 	})
 }
 
@@ -165,9 +149,6 @@ func (block *BasicBlock) BoolNeg(result, arg shared.SymReg) {
 
 			mips32Prog.ORI(work1, mips32.RegZero, 1, "")
 			mips32Prog.XOR(result, work1, arg, "")
-		},
-		bytecode: func(instr unOp, arg, result shared.Reg, bytecodeProg *bytecode.Program) {
-			bytecodeProg.BOOL_NOT(result, arg)
 		},
 	})
 }

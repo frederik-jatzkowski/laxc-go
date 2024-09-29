@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"laxc/internal/shared"
-	"laxc/pkg/target/bytecode"
 	"laxc/pkg/target/mips32"
 )
 
@@ -44,10 +43,6 @@ func (instr store) Mips32(allocations map[shared.SymReg]Allocation, localSymVarA
 	}
 
 	mips32Prog.SW(arg, target, 0, "")
-}
-
-func (instr store) Bytecode(allocations map[shared.SymReg]Allocation, localSymVarAllocs map[shared.LocalSymVar]int32, bytecodeProg *bytecode.Program) {
-	panic("not implemented")
 }
 
 func (instr store) Optimize(_ map[shared.SymReg]Instruction) (Instruction, bool) {

@@ -43,33 +43,17 @@ func dump(something any) {
 		`(` +
 			`\(` +
 			`|\)` +
-			// `|\*\w+` +
 			`)`,
-		// "",
 	)
 
 	s2 := regexp.MustCompile(
 		`(` +
-			// `(\[\])[A-Za-z\.]+` +
-			// `|[A-Za-z\.]*<nil>` +
 			`len=\d+` +
 			`|string ` +
 			`|bool ` +
 			`|int32 ` +
-			// `|\s*Int: ,` +
-			// `|\s*Real:  ` +
-			// `\(\*` +
 			`)[ ]*`,
-		// "",
 	)
-
-	// s3 := regexp.MustCompile(
-	// 	`(` +
-	// 		`\s*Int: ,` +
-	// 		// `|\s*Real: ` +
-	// 		`)[ ]*`,
-	// 	// "",
-	// )
 
 	fmt.Println(
 		string(
@@ -123,12 +107,6 @@ var rootCmd = &cobra.Command{
 
 		inputFileName := args[0]
 
-		go func() {
-			time.Sleep(time.Second * 3)
-			fmt.Println("i was stuck somewhere")
-			os.Exit(1)
-		}()
-
 		inputFile, err := os.Open(inputFileName)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -179,8 +157,6 @@ var rootCmd = &cobra.Command{
 
 		if stage == "concrete" {
 			dump(concreteProg)
-			// data, _ := json.MarshalIndent(concreteProg, "", "  ")
-			// fmt.Println(string(data))
 
 			return nil
 		}
@@ -199,8 +175,6 @@ var rootCmd = &cobra.Command{
 
 		if stage == "abstract" {
 			dump(abstractProg)
-			// data, _ := json.MarshalIndent(abstractProg, "", "  ")
-			// fmt.Println(string(data))
 
 			return nil
 		}
@@ -219,8 +193,6 @@ var rootCmd = &cobra.Command{
 
 		if stage == "attributed" {
 			dump(attributedProg)
-			// data, _ := json.MarshalIndent(attributedProg, "", "  ")
-			// fmt.Println(string(data))
 
 			return nil
 		}
@@ -239,46 +211,16 @@ var rootCmd = &cobra.Command{
 			intermediateProg.Optimize()
 		}
 
-		arch, err := cmd.Flags().GetString("arch")
-		if err != nil {
-			fmt.Println(err.Error())
-			os.Exit(1)
+		if stage == "intermediate" {
+			intermediateProg.Main().ResolvePhiFunctions()
+			fmt.Println(intermediateProg)
+
+			return nil
 		}
 
-		var (
-			targetData          string
-			targetString        string
-			targetFileExtension string
-		)
-		switch arch {
-		case "mips32":
-			if stage == "intermediate" {
-				intermediateProg.Main().ResolvePhiFunctions()
-				fmt.Println(intermediateProg)
-
-				return nil
-			}
-
-			targetProgram := intermediateProg.Mips32Program()
-			targetData = targetProgram.String()
-			targetString = targetData
-			targetFileExtension = ".s"
-		case "bytecode":
-			if stage == "intermediate" {
-				fmt.Println(intermediateProg)
-
-				return nil
-			}
-
-			targetProgram := intermediateProg.BytecodeProgram()
-			targetProgram.Finalize()
-			targetData = string(targetProgram.Bytes())
-			targetString = targetProgram.Disassemble()
-			targetFileExtension = ".lxb"
-		default:
-			fmt.Printf("unknown target architecture: %s\n", arch)
-			os.Exit(1)
-		}
+		targetProgram := intermediateProg.Mips32Program()
+		targetString := targetProgram.String()
+		targetFileExtension := ".s"
 
 		if stage == "target" {
 			fmt.Println(targetString)
@@ -304,7 +246,7 @@ var rootCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		_, err = mips32OutFile.WriteString(targetData)
+		_, err = mips32OutFile.WriteString(targetString)
 		if err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
@@ -324,8 +266,6 @@ func Execute() {
 func init() {
 	rootCmd.Flags().StringP("stage", "s", "", "if set, the compiler will stop with the specified stage and print the result to stdout. "+
 		"Possible values are (lexer|concrete|abstract|attributed|intermediate|target)")
-
-	rootCmd.Flags().StringP("arch", "a", "mips32", "sets the target architecture of the compilation (mips32|wasm)")
 
 	rootCmd.Flags().Bool("timing", false, "outputs timing information about the different compilation steps")
 
